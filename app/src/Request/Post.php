@@ -4,7 +4,7 @@ namespace Request;
 
 use Exception;
 
-class Get {
+class Post {
     private array $data;
 
     public function __construct(array $data) {

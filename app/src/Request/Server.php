@@ -4,7 +4,10 @@ namespace Request;
 
 use Exception;
 
-class Get {
+class Server {
+    private const REQUEST_METHOD_GET = 'GET';
+    private const REQUEST_METHOD_POST = 'POST';
+
     private array $data;
 
     public function __construct(array $data) {
@@ -22,5 +25,16 @@ class Get {
 
     public function all() : array {
         return $this->data;
+    }
+
+    public function requestMethod() : string {
+        return $this->data['REQUEST_METHOD'] ?? '';
+    }
+
+    public function isGet() : bool {
+        return $this->requestMethod() === self::REQUEST_METHOD_GET;
+    }
+    public function isPost() : bool {
+        return $this->requestMethod() === self::REQUEST_METHOD_POST;
     }
  }

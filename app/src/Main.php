@@ -99,27 +99,37 @@ if (isset($_FILES['uploadFile'])) {
 }
 */
 
-use Shop\Customer\Order;
+
+use Request\Request;
+use Routing\Route;
 
 class Main {
+    private Route $route;
+    private Request $request;
+
     public function Main() : void {
         $this->init();
 
-        echo "Run succesfull";
-
-        $order = new Order();
-
-        print_r($order);
+        $namespace = $this->route->getParent();
+        $base = $this->route->getBase();
+        if ($base) {
+            $class = 'Controllers\\' . implode('\\', $namespace) . '\\' . $base[0];
+            $object = new $class();
+            
+            if ($this->request->getServer()->isGet()) {
+                $object->getRequest($this->request->getGet());
+            }
+            elseif ($this->request->getServer()->isPost()) {
+                $object->getRequest($this->request->getPost());
+            }
+        }
     }
 
     private function init() : void {
-        spl_autoload_register(function($class){
-            $file = __DIR__ . '/' . str_replace('\\', '/', $class) . '.php';
-            if (file_exists($file)) {
-                include($file);
-                return true;
-            }
-            return false;
-        });
+        include 'Autoload.php';
+        Autoload::registrate();
+
+        $this->request = new Request();
+        $this->route = new Route($_SERVER['REQUEST_URI']);
     }
 }
