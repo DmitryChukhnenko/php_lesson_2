@@ -34,9 +34,9 @@ services:
         volumes:
             - 'db_data:/bitnami/postgresql'
         environment:
-            POSGRESQL_USERNAME: db_user
-            POSGRESQL_PASSWORD: db_pass
-            POSGRESQL_DATABASE: app
+            POSTGRESQL_USERNAME: db_user
+            POSTGRESQL_PASSWORD: db_pass
+            POSTGRESQL_DATABASE: app
 volumes:
     db_data:
 

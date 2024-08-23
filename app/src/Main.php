@@ -120,7 +120,7 @@ class Main {
                 $object->getRequest($this->request->getGet());
             }
             elseif ($this->request->getServer()->isPost()) {
-                $object->getRequest($this->request->getPost());
+                $object->postRequest($this->request->getPost());
             }
         }
     }
