@@ -112,8 +112,18 @@ class Main {
 
         $namespace = $this->route->getParent();
         $base = $this->route->getBase();
-        if ($base) {
-            $class = 'Controllers\\' . implode('\\', $namespace) . '\\' . $base[0];
+        if ($base) {            
+            $ar = [];
+            foreach ($namespace as $str) {
+                $str_ar = explode('-', implode('', explode('_', $str)));
+                $res = '';
+                for ($i=0; $i < count($str_ar); $i++) { 
+                    $res = $res . ucfirst($str_ar[$i]); 
+                }
+                array_push($ar, $res);
+            }            
+
+            $class = 'Controllers\\' . implode('\\', $ar) . '\\' . $base[0];
             $object = new $class();
             
             if ($this->request->getServer()->isGet()) {
