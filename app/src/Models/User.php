@@ -13,4 +13,10 @@ class User {
         return DB::getInstance()->
         getRowByClass('SELECT * FROM users', '\Models\User');
     }
+
+    public static function getUserById($login) : User {
+        $user = (DB::getInstance()->
+        getRowByClass("SELECT * FROM users WHERE login = {$login};", '\Models\User'))[0];  
+        return empty($user) ? null : $user;      
+    }
 }
